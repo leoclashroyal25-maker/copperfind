@@ -1,8 +1,8 @@
 {
- "asOf": "2026-11-22",
+ "asOf": "2026-11-24",
  "sources": {
   "PR": {
-   "name": "PennyRecon (Nov 22, 2026)",
+   "name": "PennyRecon (Nov 24, 2026)",
    "url": "https://www.pennyrecon.com/"
   },
   "PPM": {
@@ -12,27 +12,27 @@
  },
  "items": [
   {
-   "name": "Glacier Bay 12 in. Rough-In Two-Piece Dual Flush Elongated Toilet, White (seat included)",
+   "name": "Glacier Bay 12 inch Rough In Two-Piece 1.1 GPF/1.6 GPF Dual Flush Elongated Toilet in White Seat Included",
    "sku": "215-583",
    "retail": 99.0,
-   "last": "2026-11-22",
-   "reports": 148,
-   "states": 32,
+   "last": "2026-11-24",
+   "reports": 177,
+   "states": 34,
    "status": "confirmed",
    "dept": "Bath",
    "src": [
     "PR",
     "PPM"
    ],
-   "note": "Receipt-confirmed at $0.01 on Nov 16. The most-reported penny item in the country right now."
+   "note": "Receipt-confirmed at $0.01 on Nov 16. Most-reported penny item nationally; older six-digit SKU of the dual-flush."
   },
   {
-   "name": "Home Decorators Alberson 5 in. Brushed Nickel 2-Light LED Sconce",
+   "name": "Home Decorators Collection Alberson 5 in. Brushed Nickel 2-Light LED Sconce",
    "sku": "1004-871-058",
    "retail": 99.97,
-   "last": "2026-11-22",
-   "reports": 17,
-   "states": 12,
+   "last": "2026-11-24",
+   "reports": 24,
+   "states": 16,
    "status": "confirmed",
    "dept": "Lighting",
    "src": [
@@ -40,6 +40,20 @@
     "PPM"
    ],
    "note": "Two receipts on Nov 16, one with eight sconces at $0.01."
+  },
+  {
+   "name": "DIABLO 9 in. 8 TPI Steel Demon AMPED Carbide Reciprocating Saw Blade for Thick Metal Cutting (2-Pack)",
+   "sku": "1013-121-020",
+   "retail": 19.88,
+   "last": "2026-11-18",
+   "reports": 5,
+   "states": 4,
+   "status": "confirmed",
+   "dept": "Tools",
+   "src": [
+    "PR"
+   ],
+   "note": "Order history shows eight 2-packs at $0.01. Check neighbouring blade SKUs."
   },
   {
    "name": "Anvil 5-Piece Hand Tool Kit",
@@ -53,24 +67,10 @@
    "src": [
     "PR"
    ],
-   "note": "Receipt on Nov 16 with 19 kits at $0.01."
+   "note": "Receipt on Nov 16 with 19 kits at $0.01, from a cardboard shipper display."
   },
   {
-   "name": "Diablo 9 in. 8 TPI Steel Demon AMPED Carbide Reciprocating Saw Blade (2-Pack)",
-   "sku": "1013-121-020",
-   "retail": 19.88,
-   "last": "2026-11-18",
-   "reports": 5,
-   "states": 4,
-   "status": "confirmed",
-   "dept": "Tools",
-   "src": [
-    "PR"
-   ],
-   "note": "Order history shows eight 2-packs at $0.01."
-  },
-  {
-   "name": "CyberPower 1500VA 10-Outlet UPS with USB Charging",
+   "name": "CyberPower 1500VA 10-Outlet UPS RJ45 COAX USB Charging",
    "sku": "1008-718-547",
    "retail": 201.65,
    "last": "2026-11-19",
@@ -81,7 +81,7 @@
    "src": [
     "PR"
    ],
-   "note": "Receipt-confirmed at self-checkout on Nov 16."
+   "note": "Receipt-confirmed at $0.01 at self-checkout on Nov 16. Usually bottom shelf near surge protectors."
   },
   {
    "name": "Cellwood 24 in. x 50 ft. White PVC Textured Trim Coil",
@@ -95,10 +95,10 @@
    "src": [
     "PR"
    ],
-   "note": "Receipt-confirmed Nov 16. Listing has been pulled from homedepot.com."
+   "note": "Receipt-confirmed at $0.01 on Nov 16. Siding area of lumber; pulled from homedepot.com."
   },
   {
-   "name": "Anvil Snap-Off Utility Knife Set (4-Pack)",
+   "name": "Anvil Snap Off Utility Knife Set (4-Pack)",
    "sku": "1013-597-637",
    "retail": null,
    "last": "2026-11-17",
@@ -109,14 +109,14 @@
    "src": [
     "PR"
    ],
-   "note": "Receipt on Nov 16 with 32 sets at $0.01."
+   "note": "Receipt on Nov 16 with 32 sets at $0.01. Pennied alongside the Anvil 5-piece kit."
   },
   {
-   "name": "RYOBI ONE+ HP 18V Brushless Pet Mesh Filter Stick Vacuum (Tool Only)",
+   "name": "RYOBI ONE+ HP 18V Brushless Bagless Cordless Pet Mesh Filter Stick Vacuum Cleaner (Tool Only)",
    "sku": "1009-074-829",
    "retail": 199.0,
-   "last": "2026-11-22",
-   "reports": 254,
+   "last": "2026-11-24",
+   "reports": 263,
    "states": 33,
    "status": "spreading",
    "dept": "Cleaning",
@@ -124,29 +124,44 @@
     "PR",
     "PPM"
    ],
-   "note": "254 reports from 33 states and still climbing."
+   "note": "Hot and rising: 263 reports in 33 states, seen today."
   },
   {
    "name": "Milwaukee 800 lb. Capacity D-Handle Hand Truck",
    "sku": "168-674",
    "retail": 79.0,
-   "last": "2026-11-20",
-   "reports": 70,
-   "states": 21,
+   "last": "2026-11-24",
+   "reports": 78,
+   "states": 22,
    "status": "spreading",
-   "dept": "Tools",
+   "dept": "Storage",
    "src": [
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "Hot and rising: 78 reports in 22 states, seen today."
   },
   {
-   "name": "Commercial Electric 8 ft. 6-Outlet Surge Protector, 45° Flat Plug, Black",
+   "name": "DURASACK 20 Gal. Heavy-Duty Moving and Storage Bag Gray Polypropylene (2-Pack)",
+   "sku": "1015-277-793",
+   "retail": 19.99,
+   "last": "2026-11-23",
+   "reports": 17,
+   "states": 13,
+   "status": "spreading",
+   "dept": "Storage",
+   "src": [
+    "PR",
+    "PPM"
+   ],
+   "note": "Hot: 17 reports in 13 states, seen Nov 23. Also on the Nov 15 PPM list."
+  },
+  {
+   "name": "Commercial Electric 8 ft. 6-Outlet Surge Protector with 45 Degree Flat Angle Plug, Black",
    "sku": "155-180",
    "retail": 14.99,
-   "last": "2026-11-22",
-   "reports": 27,
+   "last": "2026-11-23",
+   "reports": 29,
    "states": 15,
    "status": "spreading",
    "dept": "Electrical",
@@ -154,10 +169,52 @@
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "Hot and rising: 29 reports in 15 states, seen Nov 23."
   },
   {
-   "name": "Hazel Heights 24 in. 3-Light Black Rustic Farmhouse Vanity Light",
+   "name": "DEWALT Maxfit Modular 3/8 in. Drive Right Angle Attachment",
+   "sku": "1008-778-891",
+   "retail": 24.97,
+   "last": "2026-11-24",
+   "reports": 24,
+   "states": 12,
+   "status": "spreading",
+   "dept": "Tools",
+   "src": [
+    "PR"
+   ],
+   "note": "Hot and rising: 24 reports in 12 states, seen today."
+  },
+  {
+   "name": "RYOBI ONE+ HP 18V Cordless Pet Stick Vacuum Cleaner Kit with 4.0 Ah HIGH PERFORMANCE Battery and Charger",
+   "sku": "1007-473-601",
+   "retail": 199.0,
+   "last": "2026-11-24",
+   "reports": 21,
+   "states": 9,
+   "status": "spreading",
+   "dept": "Cleaning",
+   "src": [
+    "PR"
+   ],
+   "note": "Hot and rising kit version of the pet stick vac: 21 reports in 9 states."
+  },
+  {
+   "name": "Lifeproof Monaco Oak 22 MIL x 9.06 in. W x 48.03 in. L Click Lock Waterproof Vinyl Plank Flooring (21.15 sq. ft. /Case)",
+   "sku": "1014-175-343",
+   "retail": 63.24,
+   "last": "2026-11-23",
+   "reports": 12,
+   "states": 9,
+   "status": "spreading",
+   "dept": "Flooring",
+   "src": [
+    "PR"
+   ],
+   "note": "Hot and rising: 12 reports in 9 states, seen Nov 23."
+  },
+  {
+   "name": "Home Decorators Collection Hazel Heights 24 in. 3-Light Black Rustic Farmhouse Bathroom Vanity Light",
    "sku": "1006-423-739",
    "retail": 69.97,
    "last": "2026-11-22",
@@ -169,77 +226,49 @@
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "Hot and rising: 25 reports in 14 states, seen Nov 22."
   },
   {
-   "name": "DEWALT MAXFIT Modular 3/8 in. Right Angle Attachment",
-   "sku": "1008-778-891",
-   "retail": 24.97,
-   "last": "2026-11-21",
-   "reports": 17,
-   "states": 9,
-   "status": "spreading",
+   "name": "Home Decorators Collection Sedgewood 30.5 in. W x 18.75 in. D x 34.375 in. H Single Sink Bath Vanity in White with Arctic Solid Surface Top",
+   "sku": "1003-619-897",
+   "retail": 459.0,
+   "last": "2026-11-23",
+   "reports": 3,
+   "states": 5,
+   "status": "multi",
+   "dept": "Bath",
+   "src": [
+    "PR"
+   ],
+   "note": "Hot on PennyRecon with 2 independent sources, but only 3 reports."
+  },
+  {
+   "name": "RIDGID 190 Amp, 120-Volt/240-Volt Electric, Multi-Process Welder",
+   "sku": "1010-213-069",
+   "retail": 1150.16,
+   "last": "2026-11-11",
+   "reports": 6,
+   "states": 5,
+   "status": "multi",
    "dept": "Tools",
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "2 independent sources; 6 reports in 5 states, last Nov 11."
   },
   {
-   "name": "RYOBI ONE+ HP 18V Cordless Pet Stick Vacuum Kit with 4.0 Ah Battery",
-   "sku": "1007-473-601",
-   "retail": 199.0,
-   "last": "2026-11-22",
-   "reports": 16,
-   "states": 7,
-   "status": "spreading",
-   "dept": "Cleaning",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Lifeproof Monaco Oak Luxury Vinyl Plank Flooring (21.15 sq. ft.)",
-   "sku": "1014-175-343",
-   "retail": 63.24,
-   "last": "2026-11-22",
-   "reports": 9,
-   "states": 8,
-   "status": "spreading",
-   "dept": "Flooring",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Home Decorators Alberson 4-Light Vanity Light",
-   "sku": "1001-514-599",
-   "retail": 289.0,
-   "last": "2026-11-21",
+   "name": "HDX 5-Tier Steel Wire Shelving Unit with Casters in Chrome (48 in. W x 72 in. H x 18 in. D)",
+   "sku": "1005-447-581",
+   "retail": 159.0,
+   "last": "2026-11-24",
    "reports": 4,
    "states": 4,
-   "status": "spreading",
-   "dept": "Lighting",
+   "status": "multi",
+   "dept": "Storage",
    "src": [
     "PR"
    ],
-   "note": "Sister item to the confirmed Alberson sconce."
-  },
-  {
-   "name": "RIDGID 15 Amp 10 in. Jobsite Table Saw",
-   "sku": "1004-372-760",
-   "retail": 549.0,
-   "last": "2026-11-20",
-   "reports": 5,
-   "states": 4,
-   "status": "spreading",
-   "dept": "Tools",
-   "src": [
-    "PR"
-   ],
-   "note": ""
+   "note": "Hot and rising with 2 independent sources; 4 reports in 4 states."
   },
   {
    "name": "Husky 800 Lumen LED Rechargeable Detachable Tripod Work Light",
@@ -249,29 +278,57 @@
    "reports": 121,
    "states": 28,
    "status": "active",
-   "dept": "Tools",
+   "dept": "Lighting",
    "src": [
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "121 reports in 28 states; last seen Nov 19."
   },
   {
-   "name": "OWN ZONE Wireless TV Headphones",
+   "name": "OWN ZONE Wireless TV Headphones in Black",
    "sku": "1003-565-875",
    "retail": 35.98,
    "last": "2026-11-19",
    "reports": 62,
    "states": 20,
    "status": "active",
+   "dept": "Other",
+   "src": [
+    "PR"
+   ],
+   "note": "62 reports in 20 states; last seen Nov 19."
+  },
+  {
+   "name": "Milwaukee PACKOUT M18 Battery Rack",
+   "sku": "1007-608-689",
+   "retail": 24.97,
+   "last": "2026-11-24",
+   "reports": 6,
+   "states": 4,
+   "status": "active",
+   "dept": "Storage",
+   "src": [
+    "PR"
+   ],
+   "note": "Hot and rising on PennyRecon; 6 reports in 4 states, seen today."
+  },
+  {
+   "name": "Ring Floodlight Cam Wired Pro - Smart Security Video Camera with 2-LED Lights, Dual Band Wi-Fi, 3D Motion Detection, White",
+   "sku": "1006-104-733",
+   "retail": 229.99,
+   "last": "2026-11-24",
+   "reports": 9,
+   "states": 7,
+   "status": "active",
    "dept": "Electrical",
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "Hot on PennyRecon; 9 reports in 7 states, seen today."
   },
   {
-   "name": "Milwaukee 20-32 AWG Low Voltage Wire Stripper/Cutter",
+   "name": "Milwaukee 20-32 AWG Low Voltage Wire Stripper/Cutter with Dipped Grip",
    "sku": "1010-362-919",
    "retail": 21.97,
    "last": "2026-11-19",
@@ -283,10 +340,24 @@
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "29 reports in 15 states; last seen Nov 19."
   },
   {
-   "name": "Flexon 5/8 in. x 100 ft. Garden Hose",
+   "name": "RIDGID 15 Amp 10 in. Portable Corded Pro Jobsite Table Saw with Stand",
+   "sku": "1004-372-760",
+   "retail": 549.0,
+   "last": "2026-11-24",
+   "reports": 6,
+   "states": 5,
+   "status": "active",
+   "dept": "Tools",
+   "src": [
+    "PR"
+   ],
+   "note": "Hot on PennyRecon; 6 reports in 5 states, seen today."
+  },
+  {
+   "name": "Flexon 5/8 in. dia. x 100 ft. Contractor Grade Garden Hose",
    "sku": "1015-053-805",
    "retail": 24.98,
    "last": "2026-11-19",
@@ -297,22 +368,21 @@
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "21 reports in 11 states; last seen Nov 19."
   },
   {
-   "name": "DURASACK 20 gal. Heavy-Duty Moving and Storage Bag (2-Pack)",
-   "sku": "1015-277-793",
-   "retail": 19.99,
-   "last": "2026-11-19",
-   "reports": 16,
-   "states": 13,
+   "name": "Husky 2500 Lumens Dual Power Rechargeable Battery or Solar Powered LED Work Light",
+   "sku": "1014-778-870",
+   "retail": 19.88,
+   "last": "2026-11-23",
+   "reports": 4,
+   "states": 4,
    "status": "active",
-   "dept": "Storage",
+   "dept": "Lighting",
    "src": [
-    "PR",
-    "PPM"
+    "PR"
    ],
-   "note": ""
+   "note": "Hot and rising; 4 reports in 4 states, seen Nov 23."
   },
   {
    "name": "Weber Instant-Read Grill Thermometer",
@@ -327,40 +397,24 @@
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "14 reports in 10 states; last seen Nov 19."
   },
   {
-   "name": "Ring Smart Lighting Motion-Activated Outdoor LED Spotlight (Battery)",
-   "sku": "1004-296-682",
-   "retail": 39.99,
-   "last": "2026-11-16",
-   "reports": 10,
-   "states": 9,
+   "name": "HDX 4-Tier Steel Wire Shelving Unit in Chrome (36 in. W x 54 in. H x 14 in. D)",
+   "sku": "564-184",
+   "retail": 74.98,
+   "last": "2026-11-24",
+   "reports": 6,
+   "states": 5,
    "status": "active",
-   "dept": "Lighting",
+   "dept": "Storage",
    "src": [
-    "PR",
-    "PPM"
+    "PR"
    ],
-   "note": ""
+   "note": "Hot on PennyRecon; 6 reports in 5 states, seen today."
   },
   {
-   "name": "Scrub Daddy BBQ Daddy Bristle-Free Steam Grill Brush",
-   "sku": "1009-749-973",
-   "retail": 29.98,
-   "last": "2026-11-14",
-   "reports": 9,
-   "states": 8,
-   "status": "active",
-   "dept": "Outdoor",
-   "src": [
-    "PR",
-    "PPM"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Sedgewood 24.5 in. Single Sink Bath Vanity in White with Arctic Top",
+   "name": "Home Decorators Collection Sedgewood 24.5 in. W x 18.75 in. D x 34.375 in. H Single Sink Bath Vanity in White with Arctic Solid Surface Top",
    "sku": "1003-619-907",
    "retail": 359.0,
    "last": "2026-11-18",
@@ -372,38 +426,52 @@
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "9 reports in 7 states; last seen Nov 18."
   },
   {
-   "name": "Ring Floodlight Cam Wired Pro",
-   "sku": "1006-104-733",
-   "retail": 229.99,
-   "last": "2026-11-19",
-   "reports": 8,
-   "states": 6,
-   "status": "active",
-   "dept": "Electrical",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Milwaukee 18 in. Arm Sleeves",
+   "name": "Milwaukee 18 in. Red 4-Way Stretch Cut 3 Resistant Protective Arm Sleeves",
    "sku": "1007-984-718",
    "retail": 16.47,
    "last": "2026-11-18",
    "reports": 8,
    "states": 6,
    "status": "active",
-   "dept": "Tools",
+   "dept": "Other",
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "8 reports in 6 states; last seen Nov 18."
   },
   {
-   "name": "Hampton Bay Havelock Vanity Light Bar",
+   "name": "Home Decorators Collection Alberson Collection 4-Light Brushed Nickel LED Vanity Light with Frosted Acrylic Shade",
+   "sku": "1001-514-599",
+   "retail": 289.0,
+   "last": "2026-11-21",
+   "reports": 4,
+   "states": 4,
+   "status": "active",
+   "dept": "Lighting",
+   "src": [
+    "PR"
+   ],
+   "note": "4 reports in 4 states; last seen Nov 21."
+  },
+  {
+   "name": "Daltile Restore Bright White 4 in. x 12 in. Glazed Ceramic Subway Wall Tile (10.64 sq. ft. /case)",
+   "sku": "1004-929-498",
+   "retail": 21.8,
+   "last": "2026-11-23",
+   "reports": 2,
+   "states": 1,
+   "status": "active",
+   "dept": "Flooring",
+   "src": [
+    "PR"
+   ],
+   "note": "2 reports in 1 state; last seen Nov 23."
+  },
+  {
+   "name": "Hampton Bay Havelock 22.7 in. 1-Light Chrome Integrated LED Bathroom Vanity Light Bar with Clear Seedy Glass",
    "sku": "1006-423-742",
    "retail": 99.97,
    "last": "2026-11-18",
@@ -414,10 +482,10 @@
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "7 reports in 5 states; last seen Nov 18."
   },
   {
-   "name": "Commercial Electric 6 in. LED Recessed Trim",
+   "name": "Commercial Electric 6 in. LED InfinitiEdge Recessed Retrofit Light Trim, Adjustable CCT",
    "sku": "1011-585-025",
    "retail": 16.97,
    "last": "2026-11-19",
@@ -428,25 +496,153 @@
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "5 reports in 4 states; last seen Nov 19."
   },
   {
-   "name": "Hampton Bay Conyer 20 in. 3-Speed Anywhere Fan",
+   "name": "Blink Video Doorbell System - Wireless - Battery Operated Smart Video Doorbell Camera and Included Sync Module Core,White",
+   "sku": "1013-994-799",
+   "retail": 41.63,
+   "last": "2026-11-24",
+   "reports": 2,
+   "states": 2,
+   "status": "active",
+   "dept": "Electrical",
+   "src": [
+    "PR"
+   ],
+   "note": "2 reports in 2 states; seen today."
+  },
+  {
+   "name": "Husky 25 ft. 14/3 Medium Duty Indoor/Outdoor Extension Cord, Red/Black",
+   "sku": "277-533",
+   "retail": 34.98,
+   "last": "2026-11-24",
+   "reports": 2,
+   "states": 2,
+   "status": "active",
+   "dept": "Electrical",
+   "src": [
+    "PR"
+   ],
+   "note": "2 reports in 2 states; seen today."
+  },
+  {
+   "name": "Scrub Daddy BBQ Daddy Grill Brush - Bristle Free Steam Cleaning Scrubber",
+   "sku": "1009-749-973",
+   "retail": 29.98,
+   "last": "2026-11-14",
+   "reports": 9,
+   "states": 8,
+   "status": "active",
+   "dept": "Cleaning",
+   "src": [
+    "PR",
+    "PPM"
+   ],
+   "note": "9 reports in 8 states; last seen Nov 14."
+  },
+  {
+   "name": "John Deere Z320R 42 in. 21.5 HP Dual Hydrostatic Gas V-Twin Zero Turn Riding Lawn Mower",
+   "sku": "1008-626-687",
+   "retail": 3836.99,
+   "last": "2026-11-24",
+   "reports": 2,
+   "states": 2,
+   "status": "active",
+   "dept": "Outdoor",
+   "src": [
+    "PR"
+   ],
+   "note": "2 reports in 2 states; seen today."
+  },
+  {
+   "name": "Ring Smart Lighting White Motion Activated Outdoor Integrated LED Spotlight Battery",
+   "sku": "1004-296-682",
+   "retail": 39.99,
+   "last": "2026-11-16",
+   "reports": 10,
+   "states": 9,
+   "status": "active",
+   "dept": "Lighting",
+   "src": [
+    "PR",
+    "PPM"
+   ],
+   "note": "10 reports in 9 states; last seen Nov 16."
+  },
+  {
+   "name": "Milwaukee Black Cut Level 1 Nitrile Dipped Gloves-L",
+   "sku": "1015-399-905",
+   "retail": 24.88,
+   "last": "2026-11-17",
+   "reports": 5,
+   "states": 4,
+   "status": "active",
+   "dept": "Other",
+   "src": [
+    "PR"
+   ],
+   "note": "5 reports in 4 states; last seen Nov 17. XL size also reported."
+  },
+  {
+   "name": "Milwaukee Black Cut Level 1 Nitrile Dipped Gloves-XL",
+   "sku": "1015-399-906",
+   "retail": 24.88,
+   "last": "2026-11-17",
+   "reports": 4,
+   "states": 4,
+   "status": "active",
+   "dept": "Other",
+   "src": [
+    "PR"
+   ],
+   "note": "4 reports in 4 states; last seen Nov 17. L size also reported."
+  },
+  {
+   "name": "TRINITY Black Anthracite 5-Tier Steel Wire Shelving Unit (48 in. W x 72 in. H x 18 in. D)",
+   "sku": "1004-153-623",
+   "retail": 159.0,
+   "last": "2026-11-21",
+   "reports": 2,
+   "states": 2,
+   "status": "active",
+   "dept": "Storage",
+   "src": [
+    "PR"
+   ],
+   "note": "2 reports in 2 states; last seen Nov 21."
+  },
+  {
+   "name": "Weber Genesis Grill 300 Series Rust-Resistant Griddle Insert",
+   "sku": "1009-599-161",
+   "retail": 269.99,
+   "last": "2026-11-20",
+   "reports": 2,
+   "states": 2,
+   "status": "active",
+   "dept": "Outdoor",
+   "src": [
+    "PR"
+   ],
+   "note": "2 reports in 2 states; last seen Nov 20."
+  },
+  {
+   "name": "Hampton Bay Conyer 20 in. Indoor/Wet Outdoor 3-Speed Anywhere Fan Silver with Convenient Hanging Hook",
    "sku": "1009-872-069",
    "retail": 99.98,
    "last": "2026-11-12",
    "reports": 11,
    "states": 4,
    "status": "active",
-   "dept": "Electrical",
+   "dept": "Other",
    "src": [
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "11 reports in 4 states; last seen Nov 12."
   },
   {
-   "name": "Nexgrill 8-Piece Grill Tool Set, Stainless Steel Handles",
+   "name": "Nexgrill Grill Tool Set with Stainless Steel Handles (8 Piece)",
    "sku": "1001-537-757",
    "retail": 24.98,
    "last": "2026-11-12",
@@ -458,164 +654,110 @@
     "PR",
     "PPM"
    ],
-   "note": ""
+   "note": "5 reports in 3 states; last seen Nov 12."
   },
   {
-   "name": "Husky 12000/6000 Lumen LED Work Light",
+   "name": "Home Decorators Collection 36 in. Floating Shelf",
+   "sku": "735-996",
+   "retail": 42.98,
+   "last": "2026-11-18",
+   "reports": 3,
+   "states": 2,
+   "status": "active",
+   "dept": "Storage",
+   "src": [
+    "PR"
+   ],
+   "note": "3 reports in 2 states; last seen Nov 18."
+  },
+  {
+   "name": "RYOBI ONE+ 18V Bagless Cordless Mesh Filter Stick Vacuum Cleaner (Tool Only)",
+   "sku": "1008-142-318",
+   "retail": 129.0,
+   "last": "2026-10-27",
+   "reports": 10,
+   "states": 7,
+   "status": "fading",
+   "dept": "Cleaning",
+   "src": [
+    "PR"
+   ],
+   "note": "Last seen Oct 27; 10 reports in 7 states."
+  },
+  {
+   "name": "Milwaukee 800 lbs. Capacity 2-in-1 Convertible Hand Truck",
+   "sku": "1008-631-746",
+   "retail": 159.98,
+   "last": "2026-11-03",
+   "reports": 8,
+   "states": 5,
+   "status": "fading",
+   "dept": "Storage",
+   "src": [
+    "PR",
+    "PPM"
+   ],
+   "note": "Last seen Nov 3; 8 reports in 5 states. On the Sep 14 PPM list."
+  },
+  {
+   "name": "Husky 12000 Lumens/6000 Lumens Portable LED Work Light",
    "sku": "1006-374-596",
    "retail": 69.97,
    "last": "2026-11-10",
    "reports": 39,
    "states": 18,
-   "status": "active",
-   "dept": "Tools",
+   "status": "fading",
+   "dept": "Lighting",
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "Last seen Nov 10; 39 reports in 18 states."
   },
   {
-   "name": "Weber Genesis Griddle Insert",
-   "sku": "1009-599-161",
-   "retail": 269.99,
-   "last": "2026-11-20",
-   "reports": 2,
-   "states": 2,
-   "status": "active",
-   "dept": "Outdoor",
+   "name": "BLACK+DECKER POWERSERIES+ 20-Volt MAX Lithium-Ion Cordless Bagless Stick Vacuum Cleaner",
+   "sku": "1006-967-311",
+   "retail": 99.99,
+   "last": "2026-10-27",
+   "reports": 14,
+   "states": 7,
+   "status": "fading",
+   "dept": "Cleaning",
+   "src": [
+    "PR",
+    "PPM"
+   ],
+   "note": "Last seen Oct 27; 14 reports in 7 states. On the Sep 28 PPM list."
+  },
+  {
+   "name": "Enbrighten UltraBrite Hex Lights 16Pack 16.5 in./1.45ft Integrated LED Strip Light Fixture White Dimmable 16000LM 5000K Wall Remote",
+   "sku": "1014-119-123",
+   "retail": 99.75,
+   "last": "2026-11-03",
+   "reports": 45,
+   "states": 17,
+   "status": "fading",
+   "dept": "Lighting",
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "Last seen Nov 3; 45 reports in 17 states."
   },
   {
-   "name": "Milwaukee Black Cut Level 1 Gloves (Large)",
-   "sku": "1015-399-905",
-   "retail": 24.88,
-   "last": "2026-11-17",
-   "reports": 5,
-   "states": 4,
-   "status": "active",
-   "dept": "Tools",
+   "name": "Klear Concepts 40 in. x 40 in. Fire Blanket",
+   "sku": "1011-107-956",
+   "retail": 14.27,
+   "last": "2026-11-10",
+   "reports": 12,
+   "states": 9,
+   "status": "fading",
+   "dept": "Other",
    "src": [
     "PR"
    ],
-   "note": ""
+   "note": "Last seen Nov 10; 12 reports in 9 states."
   },
   {
-   "name": "Milwaukee Black Cut Level 1 Gloves (XL)",
-   "sku": "1015-399-906",
-   "retail": 24.88,
-   "last": "2026-11-17",
-   "reports": 4,
-   "states": 4,
-   "status": "active",
-   "dept": "Tools",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Milwaukee PACKOUT M18 Battery Rack",
-   "sku": "1007-608-689",
-   "retail": 24.97,
-   "last": "2026-11-18",
-   "reports": 3,
-   "states": 2,
-   "status": "active",
-   "dept": "Tools",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "TRINITY 5-Tier Shelving, 48 x 72 in.",
-   "sku": "1004-153-623",
-   "retail": 159.0,
-   "last": "2026-11-21",
-   "reports": 2,
-   "states": 2,
-   "status": "active",
-   "dept": "Storage",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "HDX 5-Tier Shelving with Casters",
-   "sku": "1005-447-581",
-   "retail": 159.0,
-   "last": "2026-11-19",
-   "reports": 2,
-   "states": 2,
-   "status": "active",
-   "dept": "Storage",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "CyberPower 450VA 8-Outlet UPS",
-   "sku": "1004-043-727",
-   "retail": 64.99,
-   "last": "2026-11-19",
-   "reports": 2,
-   "states": 2,
-   "status": "active",
-   "dept": "Electrical",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Husky 2500 Lumen Work Light",
-   "sku": "1014-778-870",
-   "retail": 19.88,
-   "last": "2026-11-19",
-   "reports": 2,
-   "states": 2,
-   "status": "active",
-   "dept": "Tools",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Defiant Tonebridge Lock Combo Pack",
-   "sku": "1009-429-109",
-   "retail": 35.47,
-   "last": "2026-11-19",
-   "reports": 2,
-   "states": 2,
-   "status": "active",
-   "dept": "Hardware",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Char-Griller Texas Trio Grill",
-   "sku": "1002-719-695",
-   "retail": 665.0,
-   "last": "2026-11-19",
-   "reports": 2,
-   "states": 2,
-   "status": "active",
-   "dept": "Outdoor",
-   "src": [
-    "PR"
-   ],
-   "note": ""
-  },
-  {
-   "name": "Glacier Bay 2-Piece 1.28 GPF Single Flush Elongated Toilet, White",
+   "name": "Glacier Bay 2-piece 1.28 GPF Single Flush Elongated Toilet in White",
    "sku": "686-826",
    "retail": 97.02,
    "last": "2026-11-19",
@@ -626,105 +768,7 @@
    "src": [
     "PR"
    ],
-   "note": "Two independent sources."
-  },
-  {
-   "name": "RIDGID 190 Amp Multi-Process Welder",
-   "sku": "1010-213-069",
-   "retail": 1150.16,
-   "last": "2026-11-11",
-   "reports": 6,
-   "states": 5,
-   "status": "multi",
-   "dept": "Tools",
-   "src": [
-    "PR"
-   ],
-   "note": "Two independent sources."
-  },
-  {
-   "name": "Sedgewood 30.5 in. Single Sink Bath Vanity",
-   "sku": "1003-619-897",
-   "retail": 459.0,
-   "last": "2026-11-12",
-   "reports": 3,
-   "states": 4,
-   "status": "multi",
-   "dept": "Bath",
-   "src": [
-    "PR"
-   ],
-   "note": "Two independent sources."
-  },
-  {
-   "name": "Enbrighten UltraBrite Hex Lights (16-Pack)",
-   "sku": "1014-119-123",
-   "retail": 99.75,
-   "last": "2026-11-08",
-   "reports": 45,
-   "states": 17,
-   "status": "fading",
-   "dept": "Lighting",
-   "src": [
-    "PR"
-   ],
-   "note": "Two independent sources. Last report 2 weeks ago."
-  },
-  {
-   "name": "Milwaukee 800 lb. 2-in-1 Convertible Hand Truck",
-   "sku": "1008-631-746",
-   "retail": 159.98,
-   "last": "2026-11-08",
-   "reports": 8,
-   "states": 5,
-   "status": "fading",
-   "dept": "Tools",
-   "src": [
-    "PR"
-   ],
-   "note": "Two independent sources. Last report 2 weeks ago."
-  },
-  {
-   "name": "RYOBI ONE+ 18V Bagless Mesh Filter Stick Vacuum (Tool Only)",
-   "sku": "1008-142-318",
-   "retail": 129.0,
-   "last": "2026-11-01",
-   "reports": 10,
-   "states": 7,
-   "status": "fading",
-   "dept": "Cleaning",
-   "src": [
-    "PR"
-   ],
-   "note": "Two independent sources. Last report 3 weeks ago."
-  },
-  {
-   "name": "BLACK+DECKER POWERSERIES+ 20V MAX Cordless Stick Vacuum",
-   "sku": "1006-967-311",
-   "retail": 99.99,
-   "last": "2026-10-25",
-   "reports": 14,
-   "states": 7,
-   "status": "fading",
-   "dept": "Cleaning",
-   "src": [
-    "PR"
-   ],
-   "note": "Three independent sources. Last report 4 weeks ago."
-  },
-  {
-   "name": "Glacier Bay Bannister 31 in. Vanity",
-   "sku": "1012-536-755",
-   "retail": 379.0,
-   "last": "2026-10-25",
-   "reports": 4,
-   "states": 3,
-   "status": "fading",
-   "dept": "Bath",
-   "src": [
-    "PR"
-   ],
-   "note": "Two independent sources. Last report 4 weeks ago."
+   "note": "2 independent sources; 2 reports in 3 states, last seen Nov 19."
   }
  ]
 }
