@@ -43,6 +43,12 @@ main{padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));pad
 .card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;text-align:left;width:100%}
 .thumb{width:56px;height:56px;flex:none;border-radius:10px;background:var(--card2);display:grid;place-items:center;font-size:26px;overflow:hidden}
 .thumb img,.hero img{width:100%;height:100%;object-fit:cover}
+.hero:has(img){height:200px}
+.hdthumb{position:relative;cursor:pointer;border:1px solid var(--line)}
+.hdthumb em{position:absolute;left:0;right:0;bottom:0;font-style:normal;font-size:9px;font-weight:700;text-align:center;background:rgba(0,0,0,.6);color:var(--cu2);padding:2px 0}
+.skutag{background:#f2c94c;color:#1a1400;border-radius:10px;padding:10px 12px;margin:10px 0;display:flex;align-items:center;gap:10px}
+.skutag span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;line-height:1.2}
+.skutag b{font-size:28px;font-weight:800;letter-spacing:.02em;font-variant-numeric:tabular-nums;margin-left:auto}
 .card .t{font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .m{color:var(--mute);font-size:12px;margin-top:3px}
 .price{display:flex;align-items:baseline;gap:8px;margin-top:4px;flex-wrap:wrap}
@@ -72,7 +78,7 @@ nav button.on{color:var(--cu2)}
 .sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;overflow:auto;background:var(--bg);border-radius:20px 20px 0 0;border-top:1px solid var(--line);z-index:11;padding:8px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));transform:translateY(100%);transition:transform .25s ease}
 .sheet.on{transform:none}.sheet-bg.on{display:block}
 .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:4px auto 12px}
-.hero{height:140px;border-radius:16px;background:var(--card2);display:grid;place-items:center;font-size:64px;margin-bottom:12px;overflow:hidden}
+.hero{height:84px;border-radius:16px;background:var(--card2);display:grid;place-items:center;font-size:44px;margin-bottom:12px;overflow:hidden}
 .kv{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .kv div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
 .kv span{display:block;color:var(--mute);font-size:11px}.kv b{font-size:15px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
@@ -259,7 +265,7 @@ function cardHTML(i){
   const c=chance(i),[cl,cc]=chanceLabel(c),f=findFor(i.sku);
   const st={confirmed:'<span class="bd p">RECEIPT CONFIRMED</span>',spreading:'<span class="bd c">SPREADING</span>',multi:'<span class="bd g">MULTI-SOURCE</span>',active:'',fading:'<span class="bd">FADING</span>'}[i.status];
   return `<button class="card" data-open="${esc(i.sku)}">
-    <div class="thumb">${f?.photo?`<img src="${f.photo}" alt="">`:DEPT_ICON[i.dept]||'🏷️'}</div>
+    <span class="thumb hdthumb" data-hd="${esc(i.sku)}" role="link" aria-label="See photos on homedepot.com">${f?.photo?`<img src="${f.photo}" alt="">`:DEPT_ICON[i.dept]||'🏷️'}<em>📷 HD</em></span>
     <div style="flex:1;min-width:0">
       <div class="t">${esc(i.name)}</div>
       <div class="m">SKU ${esc(i.sku)} · last report ${ago(i.last)}${i.reports?` · ${i.reports} reports, ${i.states} states`:''}</div>
@@ -290,6 +296,8 @@ function openDetail(sku){
   openSheet(`
     <div class="hero">${f?.photo?`<img src="${f.photo}" alt="Your photo">`:DEPT_ICON[i.dept]||'🏷️'}</div>
     <h2 style="margin-bottom:4px">${esc(i.name)}</h2>
+    <div class="skutag"><span>Match this on<br>the shelf tag</span><b>${esc(i.sku)}</b></div>
+    <a class="btn" style="margin-bottom:10px" href="${hdUrl(i.sku)}" target="_blank" rel="noopener">📷 See real product photos on homedepot.com ↗</a>
     <div class="price" style="margin:8px 0"><span class="now" style="font-size:30px">$0.01</span><span class="was" style="font-size:16px">${money(i.retail)}</span><span class="m" style="margin:0">reported at the register</span></div>
     <div class="kv">
       <div><span>Store SKU</span><b>${esc(i.sku)}</b></div><div><span>Department</span><b>${esc(i.dept)}</b></div>
@@ -303,7 +311,7 @@ function openDetail(sku){
       <button class="btn ${saved?'ghost':''}" data-watch="${esc(i.sku)}">${saved?'★ Saved':'☆ Save'}</button>
       <button class="btn ghost" data-report="${esc(i.sku)}">✏️ Log my find</button>
     </div>
-    <a class="btn ghost" style="margin-top:8px" href="${hdUrl(i.sku)}" target="_blank" rel="noopener">See photos & stock on homedepot.com ↗</a>
+    <a class="btn ghost" style="margin-top:8px" href="${hdUrl(i.sku)}" target="_blank" rel="noopener">Check stock at your store on homedepot.com ↗</a>
     ${flipHTML(i)}
     <div class="box"><b>Sources</b><ul>${i.src.map(s=>`<li><a href="${SOURCES[s].url}" target="_blank" rel="noopener">${esc(SOURCES[s].name)}</a></li>`).join('')}</ul></div>
     <p class="note">Penny status is store-specific and changes daily. Scan the item's UPC at self-checkout to check. A store can refuse the sale.</p>`);
@@ -417,6 +425,7 @@ function renderAll(){
   renderChips();renderList();renderSearch();renderWatch();
 }
 document.addEventListener('click',e=>{
+  const h=e.target.closest('[data-hd]'); if(h){ e.preventDefault(); window.open(hdUrl(h.dataset.hd),'_blank','noopener'); return }
   const t=e.target.closest('[data-k],[data-d],[data-open],[data-watch],[data-report],[data-v],[data-w],[data-del]'); if(!t) return;
   const ds=t.dataset;
   if(ds.k){S.kind=ds.k;renderChips();renderList()}
