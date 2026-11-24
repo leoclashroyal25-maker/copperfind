@@ -105,7 +105,7 @@ nav button.on{color:var(--cu2)}
 
 <header>
   <div class="brand"><div class="coin">¢</div>Copperfind<span class="pro">HOME DEPOT · PRO FREE</span></div>
-  <div class="sub">List updated <b id="asOf"></b> · <span id="myStoreLbl"></span> <button class="link" id="setStore">Set my store</button></div>
+  <div class="sub">List updated <b id="asOf"></b> · <span id="myStoreLbl"></span> <button class="link" id="setStore">Set ZIP</button></div>
 </header>
 
 <main>
@@ -165,7 +165,8 @@ nav button.on{color:var(--cu2)}
 
   <section class="view" id="v-me">
     <h2>About this list</h2>
-    <div class="box" style="margin-top:0">
+    <div class="box" style="margin-top:0" id="myStoresBox"></div>
+    <div class="box">
       <b>Where the items come from</b>
       <p class="note" style="margin-top:4px">Every item is a real Home Depot SKU that shoppers reported ringing up at $0.01, merged from public penny lists. Each item shows its sources, report count and last report date. Snapshot taken <span id="asOf2"></span>.</p>
       <ul id="srcList"></ul>
@@ -217,7 +218,7 @@ const DEPT_ICON={Bath:'🚽',Lighting:'💡',Tools:'🧰',Electrical:'🔌','Bui
 /* ===== storage ===== */
 const LS={get(k,d){try{const v=localStorage.getItem('cf2_'+k);return v?JSON.parse(v):d}catch{return d}},
   set(k,v){try{localStorage.setItem('cf2_'+k,JSON.stringify(v))}catch{toast('Could not save on this device.')}}};
-const S={store:LS.get('store',''),watch:LS.get('watch',[]),finds:LS.get('finds',[]),kind:'now',dept:'All',sort:'chance',wtab:'saved'};
+const S={zip:LS.get('zip',''),radius:LS.get('radius',25),stores:LS.get('stores',[]),store:LS.get('store',''),watch:LS.get('watch',[]),finds:LS.get('finds',[]),kind:'now',dept:'All',sort:'chance',wtab:'saved'};
 
 /* ===== helpers ===== */
 const $=s=>document.querySelector(s);
@@ -270,6 +271,7 @@ function cardHTML(i){
       <div class="t">${esc(i.name)}</div>
       <div class="m">SKU ${esc(i.sku)} · last report ${ago(i.last)}${i.reports?` · ${i.reports} reports, ${i.states} states`:''}</div>
       <div class="price"><span class="now">$0.01</span><span class="was">${money(i.retail)}</span></div>
+      ${S.stores.length?`<div class="m">📍 Check at ${esc(storeLabel(S.stores[0]))} · ${S.stores[0].mi.toFixed(1)} mi${S.stores.length>1?` +${S.stores.length-1} more`:''}</div>`:''}
       <div class="badges">${st}<span class="bd ${cc}">${cl} chance</span>${f?'<span class="bd u">YOU LOGGED IT</span>':''}${S.watch.includes(i.sku)?'<span class="bd">★ SAVED</span>':''}</div>
     </div></button>`;
 }
@@ -303,10 +305,11 @@ function openDetail(sku){
       <div><span>Store SKU</span><b>${esc(i.sku)}</b></div><div><span>Department</span><b>${esc(i.dept)}</b></div>
       <div><span>Last report</span><b>${fmtDate(i.last)} (${ago(i.last)})</b></div><div><span>Reports / states</span><b>${i.reports?i.reports+' / '+i.states:'not given'}</b></div>
     </div>
+    ${nearbyHTML(i)}
     <div class="box"><div class="row"><b style="flex:1">Chance at your store</b><b style="color:var(--yellow)">${cl}</b></div>
       <div class="meter"><i style="width:${Math.round(c*100)}%"></i></div>
       <p class="note">${i.note?esc(i.note)+' ':''}Based on how recent the last report is, how many states reported it, and whether a receipt was posted.</p></div>
-    ${f?`<div class="box"><b>Your find</b><p class="note" style="margin-top:4px">${money(f.price)} at store #${esc(f.store||'?')} · aisle ${esc(f.aisle||'?')} bay ${esc(f.bay||'?')} · ${new Date(f.at).toLocaleDateString()}</p></div>`:''}
+    ${f?`<div class="box"><b>Your find</b><p class="note" style="margin-top:4px">${money(f.price)} at ${esc(findStore(f))} · aisle ${esc(f.aisle||'?')} bay ${esc(f.bay||'?')} · ${new Date(f.at).toLocaleDateString()}</p></div>`:''}
     <div class="row" style="margin-top:12px">
       <button class="btn ${saved?'ghost':''}" data-watch="${esc(i.sku)}">${saved?'★ Saved':'☆ Save'}</button>
       <button class="btn ghost" data-report="${esc(i.sku)}">✏️ Log my find</button>
@@ -353,7 +356,7 @@ function openReport(sku){
     <label class="l" for="rSku">SKU</label><input class="in" id="rSku" inputmode="numeric" value="${esc(i?.sku||sku||'')}" placeholder="From the shelf tag">
     <label class="l" for="rName">Item name</label><input class="in" id="rName" value="${esc(i?.name||'')}" placeholder="What is it?">
     <div class="calc"><div><label class="l" for="rPrice">Rang up at</label><input class="in" id="rPrice" inputmode="decimal" value="0.01"></div>
-    <div><label class="l" for="rStore">Store #</label><input class="in" id="rStore" inputmode="numeric" value="${esc(S.store)}"></div>
+    <div><label class="l" for="rStore">Store</label>${S.stores.length?`<select class="sel" id="rStore" style="width:100%;padding:12px">${S.stores.map(x=>`<option value="${esc(x.store)}">${esc(storeLabel(x))} · ${x.mi.toFixed(1)} mi</option>`).join('')}<option value="">Other store</option></select>`:`<input class="in" id="rStore" inputmode="numeric" placeholder="Store #" value="${esc(S.store)}">`}</div>
     <div><label class="l" for="rAisle">Aisle</label><input class="in" id="rAisle"></div><div><label class="l" for="rBay">Bay</label><input class="in" id="rBay"></div></div>
     <button class="btn" id="rSave" style="margin-top:14px">Save find</button>`);
   $('#rSku').oninput=()=>{const m=bySku($('#rSku').value);if(m&&!$('#rName').value)$('#rName').value=m.name};
@@ -363,7 +366,7 @@ function openReport(sku){
     if(!s&&!n){toast('Add a SKU or item name');return}
     if(!(p>=0)){toast('Enter the price it rang up at');return}
     const m=bySku(s);
-    S.finds.push({sku:m?.sku||s,name:n||m?.name||'Item',price:+p.toFixed(2),store:$('#rStore').value.trim(),aisle:$('#rAisle').value.trim(),bay:$('#rBay').value.trim(),photo,at:Date.now()});
+    S.finds.push({sku:m?.sku||s,name:n||m?.name||'Item',price:+p.toFixed(2),store:$('#rStore').value.trim(),storeName:(S.stores.find(x=>x.store===$('#rStore').value)?storeLabel(S.stores.find(x=>x.store===$('#rStore').value)):''),aisle:$('#rAisle').value.trim(),bay:$('#rBay').value.trim(),photo,at:Date.now()});
     LS.set('finds',S.finds);closeSheet();toast('Find saved');renderAll();
   };
 }
@@ -411,21 +414,75 @@ function renderWatch(){
       :'<div class="empty"><div class="e">⭐</div>Nothing saved yet.<br>Tap ☆ Save on an item to build your store run.</div>';
   } else {
     const fs=[...S.finds].sort((a,b)=>b.at-a.at);
-    $('#watchOut').innerHTML=fs.length?`<div class="list">${fs.map(f=>`<div class="card" style="cursor:default"><div class="thumb">${f.photo?`<img src="${f.photo}" alt="">`:'🧾'}</div><div style="flex:1;min-width:0"><div class="t">${esc(f.name)}</div><div class="m">SKU ${esc(f.sku||'—')} · store #${esc(f.store||'?')} · aisle ${esc(f.aisle||'?')} bay ${esc(f.bay||'?')}</div><div class="price"><span class="now">${money(f.price)}</span><span class="m">${new Date(f.at).toLocaleDateString()}</span></div></div><button class="link" data-del="${f.at}" aria-label="Delete find">✕</button></div>`).join('')}</div>`
+    $('#watchOut').innerHTML=fs.length?`<div class="list">${fs.map(f=>`<div class="card" style="cursor:default"><div class="thumb">${f.photo?`<img src="${f.photo}" alt="">`:'🧾'}</div><div style="flex:1;min-width:0"><div class="t">${esc(f.name)}</div><div class="m">SKU ${esc(f.sku||'—')} · ${esc(findStore(f))} · aisle ${esc(f.aisle||'?')} bay ${esc(f.bay||'?')}</div><div class="price"><span class="now">${money(f.price)}</span><span class="m">${new Date(f.at).toLocaleDateString()}</span></div></div><button class="link" data-del="${f.at}" aria-label="Delete find">✕</button></div>`).join('')}</div>`
       :'<div class="empty"><div class="e">🧾</div>No finds logged yet.<br><button class="link" data-report="">Log your first find</button></div>';
   }
+}
+
+/* ===== ZIP code + nearby stores (OpenStreetMap store locations, US Census ZIP centers) ===== */
+let GEO=null;
+async function loadGeo(){
+  if(GEO) return GEO;
+  const [z,s]=await Promise.all([fetch('data/zips.json').then(r=>r.json()),fetch('data/stores.json').then(r=>r.json())]);
+  GEO={zips:z,stores:s.stores.map(r=>({store:r[0],name:r[1],street:r[2],city:r[3],state:r[4],zip:r[5],lat:r[6],lon:r[7],phone:r[8]}))};
+  return GEO;
+}
+function miles(a,b,c,d){const R=3958.8,r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+function zipCenter(g,zip){
+  if(g.zips[zip]) return g.zips[zip];
+  /* PO-box and business ZIPs have no area of their own: use the nearest ZIP in the same 3-digit area */
+  const n=+zip, near=Object.keys(g.zips).filter(k=>k.slice(0,3)===zip.slice(0,3)).sort((a,b)=>Math.abs(+a-n)-Math.abs(+b-n))[0];
+  return near?g.zips[near]:null;
+}
+async function nearby(zip,radius){const g=await loadGeo(),c=zipCenter(g,zip);if(!c)return null;return g.stores.map(s=>({...s,mi:miles(c[0],c[1],s.lat,s.lon)})).filter(s=>s.mi<=radius).sort((a,b)=>a.mi-b.mi)}
+const storeLabel=s=>`Home Depot #${s.store||'?'}${s.name?' '+s.name:s.city?' '+s.city:''}`;
+const storeAddr=s=>[s.street,s.city,[s.state,s.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+const mapUrl=s=>`https://maps.apple.com/?q=${encodeURIComponent('The Home Depot')}&ll=${s.lat},${s.lon}`;
+const myFindsAt=n=>n?S.finds.filter(f=>digits(f.store)&&digits(f.store)===digits(n)).length:0;
+function findStore(f){const x=S.stores.find(s=>s.store&&digits(s.store)===digits(f.store));return x?storeLabel(x):f.storeName||(f.store?'store #'+f.store:'store not set')}
+function storesHTML(list){
+  return `<div class="list">${list.map(s=>`<div class="box" style="margin:0"><div class="row"><b style="flex:1">${esc(storeLabel(s))}</b><span class="m" style="margin:0">${s.mi.toFixed(1)} mi</span></div>
+    <div class="m">${esc(storeAddr(s)||'Address not listed')}</div>
+    <div class="row" style="margin-top:8px;flex-wrap:wrap"><a class="btn ghost sm" href="${mapUrl(s)}" target="_blank" rel="noopener">Directions ↗</a>${s.phone?`<span class="m" style="margin:0;user-select:all">${esc(s.phone)}</span>`:''}${myFindsAt(s.store)?`<span class="bd u">${myFindsAt(s.store)} of your finds</span>`:''}</div></div>`).join('')}</div>`;
+}
+function nearbyHTML(i){
+  if(!S.stores.length) return `<div class="box"><b>Stores near you</b><p class="note" style="margin-top:4px">Set your ZIP code to see which Home Depot stores to check.</p><button class="btn ghost" style="margin-top:8px" data-zip>Set ZIP code</button></div>`;
+  const mine=S.finds.filter(f=>digits(f.sku)===digits(i.sku)).map(f=>digits(f.store));
+  return `<div class="box"><b>Stores to check near ${esc(S.zip)}</b>
+    <p class="note" style="margin:4px 0 8px">Shoppers don't say which store an item rang up at, so these are your closest stores. Penny status differs store to store.</p>
+    ${S.stores.slice(0,5).map(s=>`<div class="row" style="padding:6px 0;border-top:1px solid var(--line)"><div style="flex:1;min-width:0"><b style="font-size:14px">${esc(storeLabel(s))}</b>${mine.includes(digits(s.store))?' <span class="bd u">YOU FOUND IT HERE</span>':''}<div class="m">${s.mi.toFixed(1)} mi · ${esc(s.street||s.city||'')}</div></div><a class="link" href="${mapUrl(s)}" target="_blank" rel="noopener">Go ↗</a></div>`).join('')}</div>`;
+}
+function openZip(){
+  openSheet(`<h2>Your area</h2>
+    <label class="l" for="zipIn">ZIP code</label>
+    <div class="row"><input class="in" id="zipIn" inputmode="numeric" maxlength="5" value="${esc(S.zip)}" placeholder="e.g. 30303"><select class="sel" id="radIn" aria-label="Distance" style="flex:none;width:auto;padding:12px">${[10,25,50].map(r=>`<option value="${r}" ${S.radius==r?'selected':''}>${r} mi</option>`).join('')}</select></div>
+    <button class="btn" id="zipGo" style="margin-top:10px">Find Home Depot stores</button><div id="zipOut" style="margin-top:12px"></div>`);
+  const go=async()=>{
+    const z=digits($('#zipIn').value),rad=+$('#radIn').value;
+    if(z.length!==5){toast('Enter a 5-digit ZIP code');return}
+    $('#zipOut').innerHTML='<p class="note">Finding stores…</p>';
+    let list; try{list=await nearby(z,rad)}catch{$('#zipOut').innerHTML="<p class=\"note\">Couldn't load the store list. Check your connection and try again.</p>";return}
+    if(list===null){$('#zipOut').innerHTML="<p class=\"note\">That ZIP code wasn't found. Check the number and try again.</p>";return}
+    if(!list.length){$('#zipOut').innerHTML=`<p class="note">No Home Depot within ${rad} miles of ${z}. Try 50 mi.</p>`;return}
+    S.zip=z;S.radius=rad;S.stores=list.slice(0,12);LS.set('zip',S.zip);LS.set('radius',S.radius);LS.set('stores',S.stores);
+    $('#zipOut').innerHTML=`<h3>${list.length} store${list.length>1?'s':''} within ${rad} mi${list.length>12?' (closest 12 shown)':''}</h3>`+storesHTML(S.stores);
+    renderAll();
+  };
+  $('#zipGo').onclick=go; $('#zipIn').onkeydown=e=>{if(e.key==='Enter')go()};
 }
 
 /* ===== wiring ===== */
 function renderAll(){
   const age=AS_OF?daysSince(AS_OF):0; $('#asOf').textContent=!AS_OF?'loading…':fmtDate(AS_OF)+(age>2?` (${age} days old)`:''); $('#asOf').style.color=age>2?'var(--red)':''; $('#asOf2').textContent=AS_OF?day(AS_OF).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
-  $('#myStoreLbl').textContent=S.store?'Store #'+S.store:'No store set';
+  $('#myStoreLbl').textContent=S.zip?`📍 ${S.zip} · ${S.stores.length} store${S.stores.length===1?'':'s'}`:'No ZIP set'; $('#setStore').textContent=S.zip?'Change':'Set ZIP';
+  $('#myStoresBox').innerHTML=S.stores.length?`<b>Home Depot stores near ${esc(S.zip)}</b><p class="note" style="margin:4px 0 10px">Within ${S.radius} miles, closest first.</p>`+storesHTML(S.stores):`<b>Your stores</b><p class="note" style="margin-top:4px">Enter your ZIP code to see the Home Depot stores near you.</p><button class="btn" style="margin-top:10px" data-zip>Set ZIP code</button>`;
   $('#srcList').innerHTML=Object.values(SOURCES).map(s=>`<li><a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a></li>`).join('');
   $('#repCount').textContent=S.finds.length?`${S.finds.length} find(s) logged on this device.`:'Finds you log, with photos, are saved on this device only.';
   renderChips();renderList();renderSearch();renderWatch();
 }
 document.addEventListener('click',e=>{
   const h=e.target.closest('[data-hd]'); if(h){ e.preventDefault(); window.open(hdUrl(h.dataset.hd),'_blank','noopener'); return }
+  if(e.target.closest('[data-zip]')){openZip();return}
   const t=e.target.closest('[data-k],[data-d],[data-open],[data-watch],[data-report],[data-v],[data-w],[data-del]'); if(!t) return;
   const ds=t.dataset;
   if(ds.k){S.kind=ds.k;renderChips();renderList()}
@@ -446,12 +503,11 @@ $('#scanFile').onchange=e=>{scanPhoto(e.target.files[0]);e.target.value=''};
 $('#tagGo').onclick=readTag;
 $('#tagPrice').onkeydown=e=>{if(e.key==='Enter')readTag()};
 $('#newReport').onclick=()=>openReport('');
-$('#setStore').onclick=()=>{openSheet(`<h2>Your Home Depot</h2><label class="l" for="stIn">Store number (on your receipt, e.g. 0204)</label><input class="in" id="stIn" inputmode="numeric" value="${esc(S.store)}"><button class="btn" id="stSave" style="margin-top:12px">Save</button><p class="note">Used to pre-fill your finds. The penny list itself is national.</p>`);
-  $('#stSave').onclick=()=>{S.store=digits($('#stIn').value);LS.set('store',S.store);closeSheet();renderAll()}};
+$('#setStore').onclick=openZip;
 $('#resetBtn').onclick=e=>{const b=e.target;
   if(!b.dataset.armed){b.dataset.armed='1';b.textContent='Tap again to erase saved items and finds';b.style.color='var(--red)';setTimeout(()=>{delete b.dataset.armed;b.textContent='Reset app data';b.style.color=''},4000);return}
   try{Object.keys(localStorage).filter(k=>k.startsWith('cf2_')).forEach(k=>localStorage.removeItem(k))}catch{}
-  const keep=LS.get('data',null);Object.assign(S,{store:'',watch:[],finds:[]});if(keep)LS.set('data',keep);b.textContent='Reset app data';b.style.color='';delete b.dataset.armed;renderAll();toast('App data erased')};
+  const keep=LS.get('data',null);Object.assign(S,{zip:'',radius:25,stores:[],store:'',watch:[],finds:[]});if(keep)LS.set('data',keep);b.textContent='Reset app data';b.style.color='';delete b.dataset.armed;renderAll();toast('App data erased')};
 renderAll();
 
 /* ===== live data: load on open, and again whenever the app comes back to the front ===== */
