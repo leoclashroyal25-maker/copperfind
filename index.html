@@ -212,7 +212,7 @@ nav button.on{color:var(--cu2)}
 
 <script>
 /* Penny list data lives in data/penny-list.json and is refreshed daily. */
-let AS_OF='', SOURCES={}, ITEMS=[];
+let AS_OF='', SOURCES={}, ITEMS=[], CHECKS=null;
 const DEPT_ICON={Bath:'🚽',Lighting:'💡',Tools:'🧰',Electrical:'🔌','Building Materials':'🧱',Cleaning:'🧹',Flooring:'🪵',Outdoor:'🔥',Storage:'📦',Hardware:'🔩',Other:'🏷️'};
 
 /* ===== storage ===== */
@@ -247,12 +247,14 @@ const KINDS=[
  ['now','🪙 Penny now','Receipt-confirmed or spreading fast in the last 7 days. Scan these first.'],
  ['next','🔮 Next up','Reported at a growing number of stores but not yet everywhere. These are the likeliest to hit $0.01 at your store next.'],
  ['older','Older','Last reported 2+ weeks ago. Most stores have pulled these, but stragglers turn up.'],
+ ['checked','✅ Checked near me','Items checked on homedepot.com at your stores. "Out of stock online" items are the best ones to scan on the shelf.'],
  ['all','All','']];
 function inKind(i,k){
   const d=daysSince(i.last);
   if(k==='now') return (i.status==='confirmed'||i.status==='spreading')&&d<=7;
   if(k==='next') return (i.status==='active'||i.status==='multi'||((i.status==='spreading')&&d>7))&&d<14;
   if(k==='older') return d>=14||i.status==='fading';
+  if(k==='checked') return checksFor(i.sku).length>0;
   return true;
 }
 function renderChips(){
@@ -272,13 +274,14 @@ function cardHTML(i){
       <div class="m">SKU ${esc(i.sku)} · last report ${ago(i.last)}${i.reports?` · ${i.reports} reports, ${i.states} states`:''}</div>
       <div class="price"><span class="now">$0.01</span><span class="was">${money(i.retail)}</span></div>
       ${S.stores.length?`<div class="m">📍 Check at ${esc(storeLabel(S.stores[0]))} · ${S.stores[0].mi.toFixed(1)} mi${S.stores.length>1?` +${S.stores.length-1} more`:''}</div>`:''}
-      <div class="badges">${st}<span class="bd ${cc}">${cl} chance</span>${f?'<span class="bd u">YOU LOGGED IT</span>':''}${S.watch.includes(i.sku)?'<span class="bd">★ SAVED</span>':''}</div>
+      <div class="badges">${checkBadge(i.sku)}${st}<span class="bd ${cc}">${cl} chance</span>${f?'<span class="bd u">YOU LOGGED IT</span>':''}${S.watch.includes(i.sku)?'<span class="bd">★ SAVED</span>':''}</div>
     </div></button>`;
 }
 function filtered(){
   let rs=ITEMS.filter(i=>inKind(i,S.kind));
   if(S.dept!=='All') rs=rs.filter(i=>i.dept===S.dept);
   const so={chance:(a,b)=>chance(b)-chance(a),reports:(a,b)=>(b.reports||0)-(a.reports||0),recent:(a,b)=>day(b.last)-day(a.last),value:(a,b)=>(b.retail||0)-(a.retail||0)};
+  if(S.kind==='checked'){const pr={out:0,unlisted:1,full:2,shiponly:3},r=i=>pr[(checksFor(i.sku)[0]||{}).result]??9;return rs.sort((a,b)=>r(a)-r(b)||so[S.sort](a,b))}
   return rs.sort(so[S.sort]);
 }
 function renderList(){
@@ -305,6 +308,7 @@ function openDetail(sku){
       <div><span>Store SKU</span><b>${esc(i.sku)}</b></div><div><span>Department</span><b>${esc(i.dept)}</b></div>
       <div><span>Last report</span><b>${fmtDate(i.last)} (${ago(i.last)})</b></div><div><span>Reports / states</span><b>${i.reports?i.reports+' / '+i.states:'not given'}</b></div>
     </div>
+    ${checksHTML(i)}
     ${nearbyHTML(i)}
     <div class="box"><div class="row"><b style="flex:1">Chance at your store</b><b style="color:var(--yellow)">${cl}</b></div>
       <div class="meter"><i style="width:${Math.round(c*100)}%"></i></div>
@@ -419,6 +423,22 @@ function renderWatch(){
   }
 }
 
+/* ===== store checks (hand checks on homedepot.com, data/store-checks.json) ===== */
+const CHECK_UI={out:['bd p','OUT OF STOCK ONLINE','Best bet: scan the shelf. Out of stock online but possibly still on the shelf is the classic penny sign.'],
+  unlisted:['bd c','NOT LISTED','Pulled from the website for this store. It may already be gone, or still on the shelf at $0.01.'],
+  full:['bd r','FULL PRICE','Still full price and in stock here. Not marked down yet.'],
+  shiponly:['bd','SHIP-TO-STORE ONLY',"This store doesn't keep it on the shelf. Skip it here."]};
+function checksFor(sku){
+  if(!CHECKS) return [];
+  const want=S.stores.length?S.stores.map(s=>digits(s.store)):Object.keys(CHECKS.stores);
+  return Object.entries(CHECKS.stores).filter(([n])=>want.includes(digits(n))).map(([n,st])=>({n,name:st.name,...(st.checks[sku]||{})})).filter(c=>c.result);
+}
+function checkBadge(sku){const c=checksFor(sku)[0];if(!c)return '';const u=CHECK_UI[c.result];return `<span class="${u[0]}">#${esc(c.n)}: ${u[1]}</span>`}
+function checksHTML(i){
+  const cs=checksFor(i.sku); if(!cs.length) return '';
+  return `<div class="box"><b>Checked at your store</b>${cs.map(c=>`<div style="padding-top:8px"><span class="${CHECK_UI[c.result][0]}">${CHECK_UI[c.result][1]}</span> <b style="font-size:14px">${esc(c.name)}</b><div class="m">${esc(c.text)}. ${esc(CHECK_UI[c.result][2])}</div></div>`).join('')}<p class="note">Checked on homedepot.com, ${fmtDate(CHECKS.checkedAt)}. Store stock changes daily.</p></div>`;
+}
+
 /* ===== ZIP code + nearby stores (OpenStreetMap store locations, US Census ZIP centers) ===== */
 let GEO=null;
 async function loadGeo(){
@@ -518,6 +538,7 @@ async function refreshData(){
   try{
     const r=await fetch('data/penny-list.json?t='+Date.now(),{cache:'no-store'});
     if(!r.ok) throw new Error(r.status);
+    fetch('data/store-checks.json?t='+Date.now(),{cache:'no-store'}).then(x=>x.ok?x.json():null).then(c=>{if(c){CHECKS=c;LS.set('checks',c);renderAll()}}).catch(()=>{});
     const d=await r.json(); const changed=d.asOf!==AS_OF&&AS_OF; applyData(d); LS.set('data',d);
     if(changed) toast('Penny list updated to '+fmtDate(d.asOf));
   }catch{
@@ -525,6 +546,7 @@ async function refreshData(){
     toast(ITEMS.length?'Offline. Showing the list from '+fmtDate(AS_OF)+'.':"Couldn't load the penny list. Check your connection.");
   }
 }
+CHECKS=LS.get('checks',null);
 applyData(LS.get('data',null));
 refreshData();
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&Date.now()-lastFetch>5*60e3) refreshData(); });

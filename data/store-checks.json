@@ -1,0 +1,25 @@
+{
+ "checkedAt": "2026-11-23",
+ "how": "Checked by hand on homedepot.com with the store selected. 'Out of stock' means the website shows the item as out of stock for this store and online; it can mean the store pulled it (a penny sign) or that it sold out.",
+ "stores": {
+  "1548": {
+   "name": "Home Depot #1548 North Thornton",
+   "checks": {
+    "155-180":      {"result": "out",      "text": "Listed at $14.99 but unavailable for pickup and delivery"},
+    "1004-871-058": {"result": "out",      "text": "Out of stock (listed at $99.97)"},
+    "1001-514-599": {"result": "out",      "text": "Out of stock"},
+    "1006-423-739": {"result": "out",      "text": "Out of stock"},
+    "1012-388-248": {"result": "out",      "text": "Out of stock"},
+    "1013-121-020": {"result": "out",      "text": "Unavailable for pickup at this store (still sold online)"},
+    "215-583":      {"result": "unlisted", "text": "Not listed online or for this store"},
+    "1009-074-829": {"result": "unlisted", "text": "Not listed online or for this store"},
+    "1007-473-601": {"result": "unlisted", "text": "This kit isn't listed for this store"},
+    "1014-175-343": {"result": "unlisted", "text": "Not listed for this store"},
+    "168-674":      {"result": "full",     "text": "Full price $79.00, 16 in stock"},
+    "1015-344-244": {"result": "shiponly", "text": "Ship-to-store only (not kept on the shelf here)"},
+    "1008-718-547": {"result": "shiponly", "text": "Ship-to-store only (not kept on the shelf here)"},
+    "1008-778-891": {"result": "shiponly", "text": "Ship-to-store only (not kept on the shelf here)"}
+   }
+  }
+ }
+}
