@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Copperfind">
+<meta name="theme-color" content="#14110f">
+<meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Copperfind</title>
+<style>
+/* Layout: phone app shell, sticky header, card list, bottom tab bar, bottom sheet for detail */
+:root{--bg:#14110f;--card:#1f1a17;--card2:#2a231f;--line:#3a312b;--text:#f4ece6;--mute:#a8998d;--cu:#e08a4f;--cu2:#f3b27d;--green:#5cc98a;--red:#ef6a5f;--yellow:#f2c94c;--blue:#8fb8ef;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font:15px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--cu2)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(20,17,15,.94);backdrop-filter:blur(12px);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:20px;letter-spacing:-.3px}
+.coin{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--cu2),var(--cu) 60%,#9b5a30);display:grid;place-items:center;font-size:13px;color:#3b2010}
+.brand .pro{margin-left:auto;font-size:11px;font-weight:700;background:var(--cu);color:#22140b;padding:3px 8px;border-radius:99px}
+.sub{display:flex;gap:6px;align-items:center;margin-top:6px;color:var(--mute);font-size:12px;flex-wrap:wrap}
+.sub b{color:var(--text)}
+.link{background:none;border:0;color:var(--cu2);font-weight:600;cursor:pointer}
+main{padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.view{display:none}.view.on{display:block}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);padding:7px 12px;border-radius:99px;font-size:13px;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--cu);border-color:var(--cu);color:#22140b;font-weight:700}
+.row{display:flex;gap:8px;align-items:center}
+.sel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;flex:1;min-width:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat b{display:block;font-size:20px;font-variant-numeric:tabular-nums}.stat span{color:var(--mute);font-size:12px}
+.list{display:flex;flex-direction:column;gap:10px}
+.card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;text-align:left;width:100%}
+.thumb{width:56px;height:56px;flex:none;border-radius:10px;background:var(--card2);display:grid;place-items:center;font-size:26px;overflow:hidden}
+.thumb img,.hero img{width:100%;height:100%;object-fit:cover}
+.card .t{font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.m{color:var(--mute);font-size:12px;margin-top:3px}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:4px;flex-wrap:wrap}
+.now{font-weight:800;font-size:18px;color:var(--yellow)}
+.was{color:var(--mute);text-decoration:line-through;font-size:13px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.bd{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;background:var(--card2);color:var(--mute)}
+.bd.p{background:#4a3b0c;color:var(--yellow)}.bd.c{background:#3b2618;color:var(--cu2)}.bd.g{background:#173527;color:var(--green)}.bd.u{background:#1d2b3d;color:var(--blue)}.bd.r{background:#3d1d1a;color:var(--red)}
+.empty{text-align:center;color:var(--mute);padding:40px 20px}
+.empty .e{font-size:42px;margin-bottom:8px}
+.btn{display:block;background:var(--cu);color:#22140b;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;width:100%;text-align:center;text-decoration:none}
+.btn.ghost{background:var(--card2);color:var(--text)}
+.btn.sm{width:auto;padding:8px 12px;font-size:13px}
+input.in{width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;outline:none}
+input.in:focus,.sel:focus{border-color:var(--cu)}
+:focus-visible{outline:2px solid var(--cu2);outline-offset:2px}
+label.l{display:block;color:var(--mute);font-size:12px;margin:10px 0 4px}
+h2{font-size:22px;letter-spacing:-.3px;margin:4px 0 10px;text-wrap:balance}
+h3{font-size:15px;margin:16px 0 8px}
+.note{color:var(--mute);font-size:12px;margin-top:10px}
+.info{background:#2b2417;border:1px solid #5a4a24;color:#e9d8a6;font-size:12px;border-radius:10px;padding:8px 10px;margin-bottom:10px}
+nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(20,17,15,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px env(safe-area-inset-right,0px) calc(6px + env(safe-area-inset-bottom,0px)) env(safe-area-inset-left,0px);z-index:6}
+nav button{background:none;border:0;color:var(--mute);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px}
+nav button i{font-style:normal;font-size:20px}
+nav button.on{color:var(--cu2)}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10;display:none}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;overflow:auto;background:var(--bg);border-radius:20px 20px 0 0;border-top:1px solid var(--line);z-index:11;padding:8px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));transform:translateY(100%);transition:transform .25s ease}
+.sheet.on{transform:none}.sheet-bg.on{display:block}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:4px auto 12px}
+.hero{height:140px;border-radius:16px;background:var(--card2);display:grid;place-items:center;font-size:64px;margin-bottom:12px;overflow:hidden}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.kv div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
+.kv span{display:block;color:var(--mute);font-size:11px}.kv b{font-size:15px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.meter{height:8px;border-radius:4px;background:var(--card2);overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--cu),var(--yellow))}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}
+.box ol,.box ul{margin:6px 0 0 18px;color:var(--mute);font-size:13px;display:grid;gap:4px}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.profit{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--card2);border:1px solid var(--line);padding:10px 16px;border-radius:99px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none;font-size:14px;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px;margin-bottom:10px}
+.seg button{flex:1;background:none;border:0;padding:8px;border-radius:9px;cursor:pointer;color:var(--mute);font-weight:600}
+.seg button.on{background:var(--card2);color:var(--text)}
+.photo-pick{display:flex;gap:10px;align-items:center;margin-top:6px}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.tagout{font-size:14px;margin-top:10px}
+.tagout b{color:var(--yellow)}
+@media (prefers-reduced-motion:reduce){.sheet{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><div class="coin">¢</div>Copperfind<span class="pro">HOME DEPOT · PRO FREE</span></div>
+  <div class="sub">List updated <b id="asOf"></b> · <span id="myStoreLbl"></span> <button class="link" id="setStore">Set my store</button></div>
+</header>
+
+<main>
+  <section class="view on" id="v-list">
+    <div class="chips" id="kindChips"></div>
+    <div class="row" style="margin-bottom:10px">
+      <select class="sel" id="sortSel" aria-label="Sort">
+        <option value="chance">Best chance first</option>
+        <option value="reports">Most reports</option>
+        <option value="recent">Most recent</option>
+        <option value="value">Highest retail value</option>
+      </select>
+    </div>
+    <div class="chips" id="deptChips"></div>
+    <div class="stats" id="stats"></div>
+    <div class="info" id="kindInfo"></div>
+    <div class="list" id="feed"></div>
+  </section>
+
+  <section class="view" id="v-search">
+    <h2>Search</h2>
+    <input class="in" id="q" placeholder="Item name or SKU" autocomplete="off">
+    <div class="list" id="results" style="margin-top:12px"></div>
+  </section>
+
+  <section class="view" id="v-check">
+    <h2>Check in store</h2>
+    <div class="box" style="margin-top:0">
+      <b>Read a clearance tag</b>
+      <label class="l" for="tagPrice">Price on the yellow tag</label>
+      <div class="row"><input class="in" id="tagPrice" inputmode="decimal" placeholder="e.g. 12.03"><button class="btn sm" id="tagGo">Read</button></div>
+      <div class="tagout" id="tagOut"></div>
+    </div>
+    <div class="box">
+      <b>Look up a SKU</b>
+      <p class="note" style="margin-top:4px">The SKU is the number on the shelf tag. Photo-scanning a barcode works in Chrome on Android; on iPhone, type it.</p>
+      <div class="row" style="margin-top:8px"><input class="in" id="manual" inputmode="numeric" placeholder="SKU, e.g. 1009-074-829"><button class="btn sm" id="manualGo">Check</button></div>
+      <label class="btn ghost filebtn" style="margin-top:8px">📷 Photo of barcode<input type="file" id="scanFile" accept="image/*" capture="environment"></label>
+      <div id="scanOut"></div>
+    </div>
+    <div class="box">
+      <b>How to check if it's a penny</b>
+      <ol>
+        <li>Scan the item's own UPC barcode at self-checkout, not the yellow clearance tag. Scanning the tag can call an associate.</li>
+        <li>If it rings up $0.01, pay. If the register asks for help, the store may pull the item. That's their call.</li>
+        <li>A good sign before you scan: the item shows out of stock on homedepot.com for your store but is still on the shelf.</li>
+        <li>Don't ask associates where penny items are. Home Depot treats penny items as ones that should have been pulled.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="view" id="v-watch">
+    <h2>Watchlist</h2>
+    <div class="seg"><button class="on" data-w="saved">Saved</button><button data-w="finds">My finds</button></div>
+    <div id="watchOut"></div>
+  </section>
+
+  <section class="view" id="v-me">
+    <h2>About this list</h2>
+    <div class="box" style="margin-top:0">
+      <b>Where the items come from</b>
+      <p class="note" style="margin-top:4px">Every item is a real Home Depot SKU that shoppers reported ringing up at $0.01, merged from public penny lists. Each item shows its sources, report count and last report date. Snapshot taken <span id="asOf2"></span>.</p>
+      <ul id="srcList"></ul>
+    </div>
+    <div class="box">
+      <b>What the labels mean</b>
+      <ul>
+        <li><b style="color:var(--yellow)">Receipt confirmed</b>: someone posted a receipt or order showing $0.01.</li>
+        <li><b style="color:var(--green)">Multi-source</b>: two or more independent sources reported it.</li>
+        <li><b style="color:var(--cu2)">Spreading</b>: reports are coming in from more stores and states this week. These are the best bets for your store next.</li>
+        <li><b>Fading</b>: last report is 2+ weeks old. Most stores have probably pulled it.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <b>The rules</b>
+      <ul>
+        <li>Home Depot has no official penny list or penny policy. Penny prices are internal "pull this item" flags.</li>
+        <li>Penny items are store-specific. An item on this list may be full price, clearance or gone at your store.</li>
+        <li>A store can refuse the sale. A penny isn't yours until it's paid for.</li>
+        <li>Not affiliated with The Home Depot.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <b>Your data</b>
+      <p class="note" style="margin-top:4px" id="repCount"></p>
+      <button class="btn ghost" id="newReport" style="margin-top:10px">+ Log a find</button>
+      <button class="btn ghost" id="resetBtn" style="margin-top:8px">Reset app data</button>
+    </div>
+  </section>
+</main>
+
+<nav id="tabs">
+  <button class="on" data-v="list"><i>🪙</i>Penny list</button>
+  <button data-v="search"><i>🔎</i>Search</button>
+  <button data-v="check"><i>🏷️</i>Check</button>
+  <button data-v="watch"><i>⭐</i>Watchlist</button>
+  <button data-v="me"><i>ℹ️</i>About</button>
+</nav>
+
+<div class="sheet-bg" id="bg"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div><div id="sheetBody"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* Penny list data lives in data/penny-list.json and is refreshed daily. */
+let AS_OF='', SOURCES={}, ITEMS=[];
+const DEPT_ICON={Bath:'🚽',Lighting:'💡',Tools:'🧰',Electrical:'🔌','Building Materials':'🧱',Cleaning:'🧹',Flooring:'🪵',Outdoor:'🔥',Storage:'📦',Hardware:'🔩',Other:'🏷️'};
+
+/* ===== storage ===== */
+const LS={get(k,d){try{const v=localStorage.getItem('cf2_'+k);return v?JSON.parse(v):d}catch{return d}},
+  set(k,v){try{localStorage.setItem('cf2_'+k,JSON.stringify(v))}catch{toast('Could not save on this device.')}}};
+const S={store:LS.get('store',''),watch:LS.get('watch',[]),finds:LS.get('finds',[]),kind:'now',dept:'All',sort:'chance',wtab:'saved'};
+
+/* ===== helpers ===== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const digits=s=>String(s).replace(/\D/g,'');
+const money=n=>n==null?'—':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const day=d=>new Date(d+'T12:00:00');
+const daysSince=d=>Math.max(0,Math.round((Date.now()-day(d))/864e5));
+const fmtDate=d=>day(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+const ago=d=>{const n=daysSince(d);return n===0?'today':n===1?'yesterday':n+' days ago'};
+const hdUrl=sku=>'https://www.homedepot.com/s/'+digits(sku);
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),2200)}
+const bySku=sku=>{const d=digits(sku);return d?ITEMS.find(i=>digits(i.sku)===d):undefined};
+
+/* Chance at a given store: status weight x recency (7-day half-life, as PennyRecon describes) x spread across states */
+function chance(i){
+  const w={confirmed:1,spreading:.9,multi:.75,active:.7,fading:.45}[i.status];
+  const recency=Math.pow(.5,daysSince(i.last)/7);
+  const spread=i.states?Math.min(1,.35+Math.log10(i.states+1)/1.6):.5;
+  return Math.max(.03,Math.min(.95,w*recency*spread));
+}
+const chanceLabel=c=>c>=.45?['High','g']:c>=.2?['Medium','c']:['Low','r'];
+
+/* ===== list ===== */
+const KINDS=[
+ ['now','🪙 Penny now','Receipt-confirmed or spreading fast in the last 7 days. Scan these first.'],
+ ['next','🔮 Next up','Reported at a growing number of stores but not yet everywhere. These are the likeliest to hit $0.01 at your store next.'],
+ ['older','Older','Last reported 2+ weeks ago. Most stores have pulled these, but stragglers turn up.'],
+ ['all','All','']];
+function inKind(i,k){
+  const d=daysSince(i.last);
+  if(k==='now') return (i.status==='confirmed'||i.status==='spreading')&&d<=7;
+  if(k==='next') return (i.status==='active'||i.status==='multi'||((i.status==='spreading')&&d>7))&&d<14;
+  if(k==='older') return d>=14||i.status==='fading';
+  return true;
+}
+function renderChips(){
+  $('#kindChips').innerHTML=KINDS.map(([k,l])=>`<button class="chip ${S.kind===k?'on':''}" data-k="${k}">${l}</button>`).join('');
+  const depts=['All',...[...new Set(ITEMS.map(i=>i.dept))].sort()];
+  $('#deptChips').innerHTML=depts.map(d=>`<button class="chip ${S.dept===d?'on':''}" data-d="${esc(d)}">${esc(d)}</button>`).join('');
+  const info=KINDS.find(k=>k[0]===S.kind)[2]; $('#kindInfo').hidden=!info; $('#kindInfo').textContent=info;
+}
+function findFor(sku){return S.finds.filter(f=>digits(f.sku)&&digits(f.sku)===digits(sku)).sort((a,b)=>b.at-a.at)[0]}
+function cardHTML(i){
+  const c=chance(i),[cl,cc]=chanceLabel(c),f=findFor(i.sku);
+  const st={confirmed:'<span class="bd p">RECEIPT CONFIRMED</span>',spreading:'<span class="bd c">SPREADING</span>',multi:'<span class="bd g">MULTI-SOURCE</span>',active:'',fading:'<span class="bd">FADING</span>'}[i.status];
+  return `<button class="card" data-open="${esc(i.sku)}">
+    <div class="thumb">${f?.photo?`<img src="${f.photo}" alt="">`:DEPT_ICON[i.dept]||'🏷️'}</div>
+    <div style="flex:1;min-width:0">
+      <div class="t">${esc(i.name)}</div>
+      <div class="m">SKU ${esc(i.sku)} · last report ${ago(i.last)}${i.reports?` · ${i.reports} reports, ${i.states} states`:''}</div>
+      <div class="price"><span class="now">$0.01</span><span class="was">${money(i.retail)}</span></div>
+      <div class="badges">${st}<span class="bd ${cc}">${cl} chance</span>${f?'<span class="bd u">YOU LOGGED IT</span>':''}${S.watch.includes(i.sku)?'<span class="bd">★ SAVED</span>':''}</div>
+    </div></button>`;
+}
+function filtered(){
+  let rs=ITEMS.filter(i=>inKind(i,S.kind));
+  if(S.dept!=='All') rs=rs.filter(i=>i.dept===S.dept);
+  const so={chance:(a,b)=>chance(b)-chance(a),reports:(a,b)=>(b.reports||0)-(a.reports||0),recent:(a,b)=>day(b.last)-day(a.last),value:(a,b)=>(b.retail||0)-(a.retail||0)};
+  return rs.sort(so[S.sort]);
+}
+function renderList(){
+  const now=ITEMS.filter(i=>inKind(i,'now')),next=ITEMS.filter(i=>inKind(i,'next'));
+  const value=now.reduce((s,i)=>s+(i.retail||0),0);
+  $('#stats').innerHTML=`<div class="stat"><b>${now.length}</b><span>Penny now</span></div><div class="stat"><b>${next.length}</b><span>Next up</span></div><div class="stat"><b>$${Math.round(value).toLocaleString()}</b><span>Retail value now</span></div>`;
+  const rs=filtered();
+  $('#feed').innerHTML=rs.length?rs.map(cardHTML).join(''):`<div class="empty"><div class="e">🕳️</div>Nothing in this view.<br>Try another department, or check "Older".</div>`;
+}
+
+/* ===== detail ===== */
+function openSheet(h){$('#sheetBody').innerHTML=h;$('#sheet').classList.add('on');$('#bg').classList.add('on')}
+function closeSheet(){$('#sheet').classList.remove('on');$('#bg').classList.remove('on')}
+function openDetail(sku){
+  const i=bySku(sku); if(!i) return;
+  const c=chance(i),[cl]=chanceLabel(c),f=findFor(sku),saved=S.watch.includes(i.sku);
+  openSheet(`
+    <div class="hero">${f?.photo?`<img src="${f.photo}" alt="Your photo">`:DEPT_ICON[i.dept]||'🏷️'}</div>
+    <h2 style="margin-bottom:4px">${esc(i.name)}</h2>
+    <div class="price" style="margin:8px 0"><span class="now" style="font-size:30px">$0.01</span><span class="was" style="font-size:16px">${money(i.retail)}</span><span class="m" style="margin:0">reported at the register</span></div>
+    <div class="kv">
+      <div><span>Store SKU</span><b>${esc(i.sku)}</b></div><div><span>Department</span><b>${esc(i.dept)}</b></div>
+      <div><span>Last report</span><b>${fmtDate(i.last)} (${ago(i.last)})</b></div><div><span>Reports / states</span><b>${i.reports?i.reports+' / '+i.states:'not given'}</b></div>
+    </div>
+    <div class="box"><div class="row"><b style="flex:1">Chance at your store</b><b style="color:var(--yellow)">${cl}</b></div>
+      <div class="meter"><i style="width:${Math.round(c*100)}%"></i></div>
+      <p class="note">${i.note?esc(i.note)+' ':''}Based on how recent the last report is, how many states reported it, and whether a receipt was posted.</p></div>
+    ${f?`<div class="box"><b>Your find</b><p class="note" style="margin-top:4px">${money(f.price)} at store #${esc(f.store||'?')} · aisle ${esc(f.aisle||'?')} bay ${esc(f.bay||'?')} · ${new Date(f.at).toLocaleDateString()}</p></div>`:''}
+    <div class="row" style="margin-top:12px">
+      <button class="btn ${saved?'ghost':''}" data-watch="${esc(i.sku)}">${saved?'★ Saved':'☆ Save'}</button>
+      <button class="btn ghost" data-report="${esc(i.sku)}">✏️ Log my find</button>
+    </div>
+    <a class="btn ghost" style="margin-top:8px" href="${hdUrl(i.sku)}" target="_blank" rel="noopener">See photos & stock on homedepot.com ↗</a>
+    ${flipHTML(i)}
+    <div class="box"><b>Sources</b><ul>${i.src.map(s=>`<li><a href="${SOURCES[s].url}" target="_blank" rel="noopener">${esc(SOURCES[s].name)}</a></li>`).join('')}</ul></div>
+    <p class="note">Penny status is store-specific and changes daily. Scan the item's UPC at self-checkout to check. A store can refuse the sale.</p>`);
+  wireFlip();
+}
+
+/* ===== flip calculator ===== */
+const FEES={ebay:{n:'eBay',pct:13.25,fix:.4},fb:{n:'FB Marketplace (local)',pct:0,fix:0},fbship:{n:'FB Marketplace (shipped)',pct:10,fix:0},mercari:{n:'Mercari',pct:10,fix:.5}};
+function flipHTML(i){
+  const sell=i.retail?(i.retail*.6).toFixed(2):'';
+  return `<div class="box"><b>🧮 Flip calculator</b>
+    <div class="calc" style="margin-top:8px">
+      <div><label class="l" for="cSell">Sale price</label><input class="in" id="cSell" inputmode="decimal" value="${sell}"></div>
+      <div><label class="l" for="cQty">Quantity</label><input class="in" id="cQty" inputmode="numeric" value="1"></div>
+      <div><label class="l" for="cPlat">Where</label><select class="sel" id="cPlat" style="width:100%;padding:12px">${Object.entries(FEES).map(([k,v])=>`<option value="${k}">${v.n}</option>`).join('')}</select></div>
+      <div><label class="l" for="cShip">Shipping each</label><input class="in" id="cShip" inputmode="decimal" value="0"></div>
+    </div>
+    <div style="margin-top:10px"><span class="note" style="margin:0">Est. profit</span><div class="profit" id="cOut"></div><div class="note" id="cFees" style="margin-top:0"></div></div>
+    <p class="note">Sale price defaults to 60% of retail. Check sold listings before you count on it.</p></div>`;
+}
+function wireFlip(){
+  const f=()=>{const sell=+$('#cSell').value||0,q=Math.max(1,parseInt($('#cQty').value)||1),ship=+$('#cShip').value||0,fe=FEES[$('#cPlat').value];
+    const fees=sell*fe.pct/100+(sell>0?fe.fix:0),p=(sell-fees-ship-0.01)*q;
+    $('#cOut').textContent=(p<0?'-$':'$')+Math.abs(p).toFixed(2);$('#cOut').style.color=p>=0?'var(--green)':'var(--red)';
+    $('#cFees').textContent=`Fees $${(fees*q).toFixed(2)} · cost $${(0.01*q).toFixed(2)}`};
+  ['#cSell','#cQty','#cShip','#cPlat'].forEach(s=>$(s).addEventListener('input',f));f();
+}
+
+/* ===== log a find ===== */
+function shrinkPhoto(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),img=new Image();
+  img.onload=()=>{const k=Math.min(1,480/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',.72))};
+  img.onerror=()=>{URL.revokeObjectURL(u);rej()};img.src=u})}
+function openReport(sku){
+  const i=sku?bySku(sku):null; let photo=null;
+  openSheet(`<h2>Log a find</h2>
+    <label class="l">Photo</label>
+    <div class="photo-pick"><div class="thumb" id="rThumb">📷</div><label class="btn ghost sm filebtn">Take or pick photo<input type="file" id="rPhoto" accept="image/*" capture="environment"></label></div>
+    <label class="l" for="rSku">SKU</label><input class="in" id="rSku" inputmode="numeric" value="${esc(i?.sku||sku||'')}" placeholder="From the shelf tag">
+    <label class="l" for="rName">Item name</label><input class="in" id="rName" value="${esc(i?.name||'')}" placeholder="What is it?">
+    <div class="calc"><div><label class="l" for="rPrice">Rang up at</label><input class="in" id="rPrice" inputmode="decimal" value="0.01"></div>
+    <div><label class="l" for="rStore">Store #</label><input class="in" id="rStore" inputmode="numeric" value="${esc(S.store)}"></div>
+    <div><label class="l" for="rAisle">Aisle</label><input class="in" id="rAisle"></div><div><label class="l" for="rBay">Bay</label><input class="in" id="rBay"></div></div>
+    <button class="btn" id="rSave" style="margin-top:14px">Save find</button>`);
+  $('#rSku').oninput=()=>{const m=bySku($('#rSku').value);if(m&&!$('#rName').value)$('#rName').value=m.name};
+  $('#rPhoto').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{photo=await shrinkPhoto(f);$('#rThumb').innerHTML=`<img src="${photo}" alt="">`}catch{toast("That photo couldn't be read.")}};
+  $('#rSave').onclick=()=>{
+    const p=parseFloat($('#rPrice').value),s=$('#rSku').value.trim(),n=$('#rName').value.trim();
+    if(!s&&!n){toast('Add a SKU or item name');return}
+    if(!(p>=0)){toast('Enter the price it rang up at');return}
+    const m=bySku(s);
+    S.finds.push({sku:m?.sku||s,name:n||m?.name||'Item',price:+p.toFixed(2),store:$('#rStore').value.trim(),aisle:$('#rAisle').value.trim(),bay:$('#rBay').value.trim(),photo,at:Date.now()});
+    LS.set('finds',S.finds);closeSheet();toast('Find saved');renderAll();
+  };
+}
+
+/* ===== search & check ===== */
+function renderSearch(){
+  const q=$('#q').value.trim().toLowerCase(),qd=digits(q);
+  if(!q){$('#results').innerHTML='<div class="empty"><div class="e">🔎</div>Search the penny list by name or SKU.</div>';return}
+  const rs=ITEMS.filter(i=>i.name.toLowerCase().includes(q)||(qd.length>=3&&digits(i.sku).includes(qd)));
+  $('#results').innerHTML=rs.length?rs.map(cardHTML).join(''):`<div class="empty"><div class="e">🤷</div>"${esc(q)}" isn't on the current penny list.</div>`;
+}
+function lookup(code){
+  const d=digits(code); if(!d){toast('Enter a SKU');return}
+  $('#manual').value=code;
+  const i=bySku(d);
+  $('#scanOut').innerHTML=i?`<h3>On the penny list</h3><div class="list">${cardHTML(i)}</div>`
+   :`<div class="tagout">SKU <b>${esc(code)}</b> isn't on the current penny list. That doesn't rule it out: scan the UPC at self-checkout. <button class="link" data-report="${esc(d)}">Log it if it rings $0.01</button></div>`;
+}
+async function scanPhoto(file){
+  if(!file) return;
+  if(!('BarcodeDetector' in window)){toast("This browser can't read barcodes. Type the SKU instead.");return}
+  try{const b=await createImageBitmap(file),c=await new BarcodeDetector({formats:['upc_a','upc_e','ean_13','code_128']}).detect(b);
+    c[0]?lookup(c[0].rawValue):toast('No barcode found. Get closer and retry.')}catch{toast("Couldn't read that photo.")}
+}
+function readTag(){
+  const p=parseFloat($('#tagPrice').value);
+  if(!(p>=0)){$('#tagOut').textContent='Enter the price on the tag.';return}
+  const end=String(Math.round(p*100)%100).padStart(2,'0');
+  const M={
+    '01':['<b>$0.01 territory.</b> If the tag or the register shows $0.01, the item is flagged to be pulled. Scan the UPC at self-checkout.','High'],
+    '02':['<b>Deep clearance.</b> One guide says .02 means about 90% off. It is a common last stop before $0.01.','High'],
+    '03':['<b>Late clearance.</b> Guides say .03 means about 75% off or the final markdown. Estimates for the next drop range from about 3 weeks to 14+ weeks, and some stores take months.','Medium'],
+    '04':['<b>Mid clearance.</b> One guide says .04 means about 50% off. It is worth watching.','Medium'],
+    '06':['<b>First markdown.</b> .06 usually means about 25% off and an early stage. Penny is likely weeks to months away.','Low']};
+  const r=M[end]||['<b>Not a clearance ending.</b> Home Depot clearance prices usually end in .06, .04, .03 or .02. Prices ending .00, .97 or .98 are usually regular or sale prices.','Low'];
+  $('#tagOut').innerHTML=`${r[0]}<br><span class="note">Penny odds from this tag: ${r[1]}. Price endings are shopper observations, not an official Home Depot code, and guides disagree on the timing.</span>`;
+}
+
+/* ===== watchlist ===== */
+function renderWatch(){
+  document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.w===S.wtab));
+  if(S.wtab==='saved'){
+    const rs=S.watch.map(bySku).filter(Boolean);
+    $('#watchOut').innerHTML=rs.length?`<div class="list">${rs.map(cardHTML).join('')}</div><p class="note">Take this list to the store. Scan each item's UPC at self-checkout.</p>`
+      :'<div class="empty"><div class="e">⭐</div>Nothing saved yet.<br>Tap ☆ Save on an item to build your store run.</div>';
+  } else {
+    const fs=[...S.finds].sort((a,b)=>b.at-a.at);
+    $('#watchOut').innerHTML=fs.length?`<div class="list">${fs.map(f=>`<div class="card" style="cursor:default"><div class="thumb">${f.photo?`<img src="${f.photo}" alt="">`:'🧾'}</div><div style="flex:1;min-width:0"><div class="t">${esc(f.name)}</div><div class="m">SKU ${esc(f.sku||'—')} · store #${esc(f.store||'?')} · aisle ${esc(f.aisle||'?')} bay ${esc(f.bay||'?')}</div><div class="price"><span class="now">${money(f.price)}</span><span class="m">${new Date(f.at).toLocaleDateString()}</span></div></div><button class="link" data-del="${f.at}" aria-label="Delete find">✕</button></div>`).join('')}</div>`
+      :'<div class="empty"><div class="e">🧾</div>No finds logged yet.<br><button class="link" data-report="">Log your first find</button></div>';
+  }
+}
+
+/* ===== wiring ===== */
+function renderAll(){
+  const age=AS_OF?daysSince(AS_OF):0; $('#asOf').textContent=!AS_OF?'loading…':fmtDate(AS_OF)+(age>2?` (${age} days old)`:''); $('#asOf').style.color=age>2?'var(--red)':''; $('#asOf2').textContent=AS_OF?day(AS_OF).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+  $('#myStoreLbl').textContent=S.store?'Store #'+S.store:'No store set';
+  $('#srcList').innerHTML=Object.values(SOURCES).map(s=>`<li><a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a></li>`).join('');
+  $('#repCount').textContent=S.finds.length?`${S.finds.length} find(s) logged on this device.`:'Finds you log, with photos, are saved on this device only.';
+  renderChips();renderList();renderSearch();renderWatch();
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-k],[data-d],[data-open],[data-watch],[data-report],[data-v],[data-w],[data-del]'); if(!t) return;
+  const ds=t.dataset;
+  if(ds.k){S.kind=ds.k;renderChips();renderList()}
+  else if(ds.d){S.dept=ds.d;renderChips();renderList()}
+  else if(ds.open){openDetail(ds.open)}
+  else if(ds.watch){const k=ds.watch;S.watch=S.watch.includes(k)?S.watch.filter(x=>x!==k):[...S.watch,k];LS.set('watch',S.watch);toast(S.watch.includes(k)?'Saved to watchlist':'Removed');renderAll();openDetail(k)}
+  else if(ds.report!==undefined){openReport(ds.report)}
+  else if(ds.v){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b===t));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+ds.v));window.scrollTo(0,0)}
+  else if(ds.w){S.wtab=ds.w;renderWatch()}
+  else if(ds.del){S.finds=S.finds.filter(f=>String(f.at)!==ds.del);LS.set('finds',S.finds);renderAll()}
+});
+$('#sortSel').onchange=e=>{S.sort=e.target.value;renderList()};
+$('#q').oninput=renderSearch;
+$('#bg').onclick=closeSheet;
+$('#manualGo').onclick=()=>lookup($('#manual').value);
+$('#manual').onkeydown=e=>{if(e.key==='Enter')lookup($('#manual').value)};
+$('#scanFile').onchange=e=>{scanPhoto(e.target.files[0]);e.target.value=''};
+$('#tagGo').onclick=readTag;
+$('#tagPrice').onkeydown=e=>{if(e.key==='Enter')readTag()};
+$('#newReport').onclick=()=>openReport('');
+$('#setStore').onclick=()=>{openSheet(`<h2>Your Home Depot</h2><label class="l" for="stIn">Store number (on your receipt, e.g. 0204)</label><input class="in" id="stIn" inputmode="numeric" value="${esc(S.store)}"><button class="btn" id="stSave" style="margin-top:12px">Save</button><p class="note">Used to pre-fill your finds. The penny list itself is national.</p>`);
+  $('#stSave').onclick=()=>{S.store=digits($('#stIn').value);LS.set('store',S.store);closeSheet();renderAll()}};
+$('#resetBtn').onclick=e=>{const b=e.target;
+  if(!b.dataset.armed){b.dataset.armed='1';b.textContent='Tap again to erase saved items and finds';b.style.color='var(--red)';setTimeout(()=>{delete b.dataset.armed;b.textContent='Reset app data';b.style.color=''},4000);return}
+  try{Object.keys(localStorage).filter(k=>k.startsWith('cf2_')).forEach(k=>localStorage.removeItem(k))}catch{}
+  const keep=LS.get('data',null);Object.assign(S,{store:'',watch:[],finds:[]});if(keep)LS.set('data',keep);b.textContent='Reset app data';b.style.color='';delete b.dataset.armed;renderAll();toast('App data erased')};
+renderAll();
+
+/* ===== live data: load on open, and again whenever the app comes back to the front ===== */
+let lastFetch=0;
+function applyData(d){ if(!d||!Array.isArray(d.items)) return; AS_OF=d.asOf; SOURCES=d.sources||{}; ITEMS=d.items; renderAll(); }
+async function refreshData(){
+  lastFetch=Date.now(); $('#asOf').textContent=AS_OF?fmtDate(AS_OF)+' · checking…':'loading…';
+  try{
+    const r=await fetch('data/penny-list.json?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok) throw new Error(r.status);
+    const d=await r.json(); const changed=d.asOf!==AS_OF&&AS_OF; applyData(d); LS.set('data',d);
+    if(changed) toast('Penny list updated to '+fmtDate(d.asOf));
+  }catch{
+    if(!ITEMS.length) applyData(LS.get('data',null)); else renderAll();
+    toast(ITEMS.length?'Offline. Showing the list from '+fmtDate(AS_OF)+'.':"Couldn't load the penny list. Check your connection.");
+  }
+}
+applyData(LS.get('data',null));
+refreshData();
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&Date.now()-lastFetch>5*60e3) refreshData(); });
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
